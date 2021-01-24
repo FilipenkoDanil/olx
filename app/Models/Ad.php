@@ -19,4 +19,8 @@ class Ad extends Model
     public function images(){
         return $this->hasMany(AdImage::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

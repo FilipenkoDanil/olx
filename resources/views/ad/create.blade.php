@@ -15,7 +15,7 @@
                         </div>
                     @endif
                     <div class="col-md-12">
-                        <form method="POST" action="{{ route('create-ad') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('create.ad') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="title">Название обявления</label>

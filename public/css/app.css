@@ -10248,3 +10248,20 @@ body{
 .card-item{
     margin-bottom: 10px;
 }
+a {
+    color: #000 !important;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.gallery{
+    margin: 10px 35px;
+}
+
+.gallery img{
+    width: 230px;
+    padding: 5px;
+    border-radius: 10px;
+}

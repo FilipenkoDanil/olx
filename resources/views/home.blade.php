@@ -14,14 +14,16 @@
                         @foreach($ads as $ad)
                             <div class="col">
                                 <div class="card h-60 card-item">
-                                    <img src="{{ Storage::url($ad->images[0]->image) }}" class="card-img-top"
-                                         alt="city">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $ad->title }}</h5>
-                                        <p class="card-text">{{ $ad->price }} грн</p>
-                                    </div>
+                                    <a href="{{ route('show', $ad) }}">
+                                        <img src="{{ Storage::url($ad->images[0]->image) }}" class="card-img-top"
+                                             alt="city">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $ad->title }}</h5>
+                                            <p class="card-text">{{ $ad->price }} грн</p>
+                                        </div>
+                                    </a>
                                     <div class="card-footer">
-                                        <small class="text-muted">Добавлено {{ $ad->created_at }}</small>
+                                        <small class="text-muted">Добавлено {{ $ad->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
                             </div>

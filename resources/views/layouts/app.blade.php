@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="/css/lightbox.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 
     <!-- Styles -->
@@ -64,6 +65,16 @@
                                         Добавить объявление
                                     </a>
 
+                                    <a class="dropdown-item" href="{{ route('create') }}">
+                                        Профиль
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="dropdown-item" href="{{ route('user.edit') }}">
+                                        Настройки
+                                    </a>
+
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -87,5 +98,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="/js/lightbox-plus-jquery.min.js"></script>
 </body>
 </html>

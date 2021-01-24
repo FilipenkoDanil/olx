@@ -15,6 +15,12 @@ class AdController extends Controller
         return view('home', compact('ads'));
     }
 
+    public function show($adId)
+    {
+        $ad = Ad::where('id', $adId)->with('user')->first();
+        return view('ad.show', compact('ad'));
+    }
+
     public function create()
     {
         return view('ad.create');
@@ -30,7 +36,7 @@ class AdController extends Controller
         ]);
 
         foreach ($request->file('image') as $item) {
-            $path = $item->store('ad-images');
+            $path = $item->store('user-images');
             AdImage::create([
                 'image' => $path,
                 'ad_id' => $ad->id
