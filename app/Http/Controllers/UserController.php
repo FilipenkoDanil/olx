@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,9 +11,9 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
-        return 0;
+        return view('user.index', compact('user'));
     }
 
     public function edit()
@@ -38,6 +39,19 @@ class UserController extends Controller
         $params = $request->all();
         $params['avatar'] = $user->avatar;
         $user->update($params);
+
+        return redirect()->back();
+    }
+
+    public function addReview(Request $request, User $user){
+        Review::create([
+            'user_id' => $user->id,
+            'writer_id' => Auth::id(),
+            'comment' => $request->comment,
+            'rating' => $request->rating,
+        ]);
+
+        $user->updateRating();
 
         return redirect()->back();
     }

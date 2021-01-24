@@ -25,7 +25,7 @@ class AdRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:1',
             'image' => 'required',
             'image.*' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];

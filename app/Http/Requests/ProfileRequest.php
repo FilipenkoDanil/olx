@@ -29,6 +29,7 @@ class ProfileRequest extends FormRequest
             'phone' => array('required', 'regex:((\+38)?\(?\d{3}\)?[\s\.-]?(\d{7}|\d{3}[\s\.-]\d{2}[\s\.-]\d{2}|\d{3}-\d{4}))', 'unique:users,phone,' . Auth::id()),
             'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
             'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'about' => 'max:255',
         ];
     }
 }

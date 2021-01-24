@@ -5,12 +5,15 @@
         <div class="row">
             <div class="col-lg-9 col-xl-9">
                 <div class="card-box">
-                    <h2 style="display: inline-block">{{ $ad->title }}</h2>
+                    <h2 style="display: inline-block; width: 80%">{{ $ad->title }}</h2>
+                    <div
+                        style="display: inline-block; width: 15%; text-align: right">{{ $ad->created_at->diffForHumans() }}</div>
                     <h4>{{ $ad->price }} грн</h4>
                     <hr/>
                     <div class="gallery">
                         @foreach($ad->images as $img)
-                            <a href="{{ Storage::url($img->image) }}" data-lightbox="images"><img src="{{ Storage::url($img->image) }}"></a>
+                            <a href="{{ Storage::url($img->image) }}" data-lightbox="images"><img
+                                    src="{{ Storage::url($img->image) }}"></a>
 
                         @endforeach
                     </div>
@@ -23,9 +26,12 @@
             <div class="col-lg-3 col-xl-3">
                 <div class="card-box text-center">
 
-                    <img src="{{ Storage::url($ad->user->avatar) }}" class="rounded-circle avatar-xl img-thumbnail" alt="profile-image">
+                    <a href="{{ route('user.profile', $ad->user) }}">
+                        <img src="{{ Storage::url($ad->user->avatar) }}" class="rounded-circle avatar-xl img-thumbnail"
+                             alt="profile-image">
 
-                    <h4 class="mb-0">{{ $ad->user->name }}</h4>
+                        <h4 class="mb-0">{{ $ad->user->name }}</h4>
+                    </a>
 
                     <div class="text-left mt-3">
                         @if(!is_null($ad->user->about))
@@ -36,12 +42,18 @@
                         @endif
 
 
-                        <p class="text-muted mb-2 font-13"><strong>Телефон :</strong><span class="ml-2">{{ $ad->user->phone }}</span></p>
+                        <p class="text-muted mb-2 font-13"><strong>Телефон :</strong><span
+                                class="ml-2">{{ $ad->user->phone }}</span></p>
 
-                        <p class="text-muted mb-2 font-13"><strong>Почта :</strong> <span class="ml-2 ">{{ $ad->user->email }}</span>
+                        <p class="text-muted mb-2 font-13"><strong>Почта :</strong> <span
+                                class="ml-2 ">{{ $ad->user->email }}</span>
                         </p>
-
                     </div>
+                    @if(Auth::id() === $ad->user->id)
+                        <form>
+                            <button class="btn btn-danger mb-0">Удалить объявление</button>
+                        </form>
+                    @endif
 
                 </div> <!-- end card-box -->
             </div>

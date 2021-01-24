@@ -11,14 +11,17 @@ class AdController extends Controller
 {
     public function index()
     {
-        $ads = Ad::all();
+        $ads = Ad::all()->sortByDesc('created_at');
         return view('home', compact('ads'));
     }
 
     public function show($adId)
     {
         $ad = Ad::where('id', $adId)->with('user')->first();
-        return view('ad.show', compact('ad'));
+        if($ad){
+            return view('ad.show', compact('ad'));
+        }
+        abort(404);
     }
 
     public function create()

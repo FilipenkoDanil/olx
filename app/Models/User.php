@@ -43,4 +43,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function updateRating()
+    {
+        if (count($this->reviews) > 0) {
+            $this->rating = $this->reviews->sum('rating') / count($this->reviews);
+        } else {
+            $this->rating = 0;
+        }
+        $this->save();
+    }
 }
