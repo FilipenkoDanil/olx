@@ -50,9 +50,17 @@
                         </p>
                     </div>
                     @if(Auth::id() === $ad->user->id)
-                        <form>
-                            <button class="btn btn-danger mb-0">Удалить объявление</button>
+
+                        <form class="inline-block">
+                            <button class="btn btn-primary mb-0">Редактировать</button>
                         </form>
+                        <br>
+                        <form action="{{ route('ad.destroy', $ad->id) }}" method="POST" class="inline-block">
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-danger mb-0" type="submit">Удалить объявление</button>
+                        </form>
+
                     @endif
 
                 </div> <!-- end card-box -->

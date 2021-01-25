@@ -6,6 +6,7 @@ use App\Http\Requests\AdRequest;
 use App\Models\Ad;
 use App\Models\AdImage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
@@ -18,7 +19,7 @@ class AdController extends Controller
     public function show($adId)
     {
         $ad = Ad::where('id', $adId)->with('user')->first();
-        if($ad){
+        if ($ad) {
             return view('ad.show', compact('ad'));
         }
         abort(404);
@@ -47,5 +48,16 @@ class AdController extends Controller
         }
 
         return redirect()->route('home')->with('success', 'Объявление добавлено.');
+    }
+
+    public function destroy($ad)
+    {
+        $ad = Ad::find($ad);
+        foreach ($ad->images as $image) {
+            Storage::delete($image->image);
+        }
+        $ad->delete();
+
+        return redirect()->route('home');
     }
 }

@@ -23,7 +23,7 @@ Route::get('/user/profile/{user}', [\App\Http\Controllers\UserController::class,
 Route::group(['middleware'=> 'auth'], function (){
     Route::get('/create', [\App\Http\Controllers\AdController::class, 'create'])->name('create');
     Route::post('/create-ad', [\App\Http\Controllers\AdController::class, 'store'])->name('create.ad');
-
+    Route::delete('/advert/{advert}/delete', [\App\Http\Controllers\AdController::class, 'destroy'])->name('ad.destroy');
 
     Route::get('/user/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('user.update');

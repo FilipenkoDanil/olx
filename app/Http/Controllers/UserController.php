@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,7 +43,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function addReview(Request $request, User $user){
+    public function addReview(ReviewRequest $request, User $user){
         Review::create([
             'user_id' => $user->id,
             'writer_id' => Auth::id(),
