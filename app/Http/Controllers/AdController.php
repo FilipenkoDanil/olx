@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdRequest;
 use App\Models\Ad;
 use App\Models\AdImage;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,8 @@ class AdController extends Controller
 
     public function create()
     {
-        return view('ad.create');
+        $cities = City::all()->sortBy('city');
+        return view('ad.create', compact('cities'));
     }
 
     public function store(AdRequest $request)
@@ -38,6 +40,7 @@ class AdController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
+            'city_id' => $request->city,
         ]);
 
         foreach ($request->file('image') as $item) {
@@ -66,7 +69,8 @@ class AdController extends Controller
     {
         $ad = Ad::where('id',$ad)->with('images')->first();
         if (!is_null($ad) && Auth::id() == $ad->user_id) {
-            return view('ad.edit', compact('ad'));
+            $cities = City::all()->sortBy('city');
+            return view('ad.edit', compact(['ad', 'cities']));
         }
         return redirect()->back();
     }

@@ -14,6 +14,7 @@ class Ad extends Model
         'title',
         'description',
         'price',
+        'city_id',
     ];
 
     public function images(){
@@ -22,5 +23,9 @@ class Ad extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function city(){
+        return $this->belongsTo(City::class);
     }
 }

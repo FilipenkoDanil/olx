@@ -18,6 +18,8 @@
                         @endforeach
                     </div>
                     <hr/>
+                    {{ $ad->city->city . ', ' . $ad->city->region }}
+                    <hr/>
                     <p>
                         {{ $ad->description }}
                     </p>

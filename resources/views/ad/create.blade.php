@@ -33,6 +33,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Город</label>
+                                    <select class="form-control" name="city">
+                                        @foreach($cities as $city)
+                                            <option value="{{ $city->id }}">{{ $city->city }}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="input">Выберите фото (одно или несколько):</label>
                                 <input class="form-control-file" id="input" type="file" name="image[]" multiple accept=".jpg, .jpeg, .png"/>
                             </div>

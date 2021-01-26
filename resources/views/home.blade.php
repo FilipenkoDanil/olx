@@ -19,7 +19,10 @@
                                              alt="city">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $ad->title }}</h5>
-                                            <p class="card-text">{{ $ad->price }} грн</p>
+                                            <p class="card-text">{{ $ad->price }} грн
+                                            <br>
+                                                {{ $ad->city->city . ', ' . $ad->city->region}}
+                                            </p>
                                         </div>
                                     </a>
                                     <div class="card-footer">
