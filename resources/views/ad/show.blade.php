@@ -50,10 +50,8 @@
                         </p>
                     </div>
                     @if(Auth::id() === $ad->user->id)
-
-                        <form class="inline-block">
-                            <button class="btn btn-primary mb-0">Редактировать</button>
-                        </form>
+                        <a href="{{ route('ad.edit', $ad) }}"><button class="btn btn-primary">Редактировать</button></a>
+                        <br>
                         <br>
                         <form action="{{ route('ad.destroy', $ad->id) }}" method="POST" class="inline-block">
                             @method('DELETE')

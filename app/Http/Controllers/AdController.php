@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdRequest;
 use App\Models\Ad;
 use App\Models\AdImage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -59,5 +60,39 @@ class AdController extends Controller
         $ad->delete();
 
         return redirect()->route('home');
+    }
+
+    public function edit($ad)
+    {
+        $ad = Ad::where('id',$ad)->with('images')->first();
+        if (!is_null($ad) && Auth::id() == $ad->user_id) {
+            return view('ad.edit', compact('ad'));
+        }
+        return redirect()->back();
+    }
+
+    public function update(Request $request, Ad $ad)
+    {
+        $ad->update($request->all());
+
+        if(!is_null($request->file('image'))){
+            foreach ($request->file('image') as $item) {
+                $path = $item->store('user-images');
+                AdImage::create([
+                    'image' => $path,
+                    'ad_id' => $ad->id
+                ]);
+            }
+        }
+
+
+        return redirect()->route('show', $ad->id);
+    }
+
+    public function deleteImage(AdImage $image){
+        Storage::delete($image->image);
+        $image->delete();
+
+        return redirect()->back();
     }
 }
