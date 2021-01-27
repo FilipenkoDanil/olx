@@ -40,7 +40,7 @@
 
                             <div class="form-group">
                                 <label>Город</label>
-                                <select class="form-control" name="city">
+                                <select class="form-control" name="city_id">
                                     @foreach($cities as $city)
                                         <option @if($ad->city->id === $city->id) selected @endif value="{{ $city->id }}">{{ $city->city }}</option>
                                     @endforeach

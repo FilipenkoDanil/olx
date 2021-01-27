@@ -2,8 +2,17 @@
 
 @section('content')
     <div class="container">
+        <nav class="navbar">
+            <form class="form-inline" method="GET" action="{{ route('search') }}">
+                <input class="form-control mr-sm-2" name="query" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav>
         <div class="row">
             <div class="col-lg-12 col-xl-12">
+                @isset($query)
+                    <h3>Поиск по запросу: {{ $query }}</h3>
+                @endisset
                 @if(session()->has('success'))
                     <div class="alert alert-success text-center" role="alert">
                         {{ session()->get('success') }}
@@ -20,22 +29,22 @@
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $ad->title }}</h5>
                                             <p class="card-text">{{ $ad->price }} грн
-                                            <br>
+                                                <br>
                                                 {{ $ad->city->city . ', ' . $ad->city->region}}
                                             </p>
                                         </div>
                                     </a>
                                     <div class="card-footer">
-                                        <small class="text-muted">Добавлено {{ $ad->created_at->diffForHumans() }}</small>
+                                        <small
+                                            class="text-muted">Добавлено {{ $ad->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
+                    {{ $ads->links() }}
                 </div> <!-- end card-box-->
-
             </div> <!-- end col -->
         </div>
     </div>
-
 @endsection

@@ -14,7 +14,7 @@ class AdController extends Controller
 {
     public function index()
     {
-        $ads = Ad::all()->sortByDesc('created_at');
+        $ads = Ad::orderBy('created_at', 'desc')->paginate(8);
         return view('home', compact('ads'));
     }
 
@@ -77,6 +77,7 @@ class AdController extends Controller
 
     public function update(Request $request, Ad $ad)
     {
+
         $ad->update($request->all());
 
         if(!is_null($request->file('image'))){

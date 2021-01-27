@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\AdController::class, 'index'])->name('home');
+Route::get('/search', [\App\Http\Controllers\SearchController::class, 'search'])->name('search');
 
 Route::get('/advert/{id}', [\App\Http\Controllers\AdController::class, 'show'])->name('show');
 Route::get('/user/profile/{user}', [\App\Http\Controllers\UserController::class, 'index'])->name('user.profile');
