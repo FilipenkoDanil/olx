@@ -19,7 +19,8 @@ Route::get('/', [\App\Http\Controllers\AdController::class, 'index'])->name('hom
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'search'])->name('search');
 
 Route::get('/advert/{id}', [\App\Http\Controllers\AdController::class, 'show'])->name('show');
-Route::get('/user/profile/{user}', [\App\Http\Controllers\UserController::class, 'index'])->name('user.profile');
+Route::get('/user/{user}/profile', [\App\Http\Controllers\UserController::class, 'index'])->name('user.profile');
+Route::get('/user/{user}/ads', [\App\Http\Controllers\SearchController::class, 'userAds'])->name('user.ads');
 
 Route::group(['middleware'=> 'auth'], function (){
     Route::get('/create', [\App\Http\Controllers\AdController::class, 'create'])->name('create');
@@ -32,4 +33,5 @@ Route::group(['middleware'=> 'auth'], function (){
     Route::get('/user/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('user.update');
     Route::post('/user/{user}/addreview/', [\App\Http\Controllers\UserController::class, 'addReview'])->name('user.addreview');
+
 });

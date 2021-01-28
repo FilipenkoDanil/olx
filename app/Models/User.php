@@ -49,6 +49,10 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function ads(){
+        return $this->hasMany(Ad::class);
+    }
+
     public function updateRating()
     {
         if (count($this->reviews) > 0) {
@@ -58,4 +62,5 @@ class User extends Authenticatable
         }
         $this->save();
     }
+
 }

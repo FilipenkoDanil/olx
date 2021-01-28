@@ -4,8 +4,15 @@
     <div class="container">
         <nav class="navbar">
             <form class="form-inline" method="GET" action="{{ route('search') }}">
-                <input class="form-control mr-sm-2" name="query" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <select class="form-control" name="сity">
+                    <option selected value="0">Вся Украина</option>
+                    @foreach($cities as $city)
+                        <option value="{{ $city->id }}">{{ $city->city }}</option>
+                    @endforeach
+                </select>
+                <input class="form-control mr-sm-2" name="query" type="search" placeholder="Поиск по объявлениям"
+                       aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Найти</button>
             </form>
         </nav>
         <div class="row">

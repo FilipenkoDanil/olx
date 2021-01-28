@@ -23,11 +23,16 @@ class AdRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'title' => 'required|max:255',
             'price' => 'required|numeric|min:1',
-            'image' => 'required',
             'image.*' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
+
+        if($this->route()->named('create.ad')){
+            $rules['image'] = 'required';
+        }
+
+        return $rules;
     }
 }

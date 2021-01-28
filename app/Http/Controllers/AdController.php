@@ -15,7 +15,8 @@ class AdController extends Controller
     public function index()
     {
         $ads = Ad::orderBy('created_at', 'desc')->paginate(8);
-        return view('home', compact('ads'));
+        $cities = City::all()->sortBy('city');
+        return view('home', compact(['ads', 'cities']));
     }
 
     public function show($adId)
@@ -40,7 +41,7 @@ class AdController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'city_id' => $request->city,
+            'city_id' => $request->city_id,
         ]);
 
         foreach ($request->file('image') as $item) {
@@ -75,7 +76,7 @@ class AdController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request, Ad $ad)
+    public function update(AdRequest $request, Ad $ad)
     {
 
         $ad->update($request->all());

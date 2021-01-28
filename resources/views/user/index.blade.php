@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Профиль пользователя')
+@section('title', 'Профиль ' . $user->name)
 
 @section('content')
     <div class="container">
@@ -26,6 +26,8 @@
                         <p class="text-muted mb-2 font-13"><strong>Почта :</strong> <span
                                 class="ml-2 ">{{ $user->email }}</span>
                         </p>
+
+                        <p class="text-muted text-center font-13"><a href="{{ route('user.ads', $user) }}"><strong>Все объявления</strong></a></p>
                     </div>
                 </div> <!-- end card-box -->
             </div> <!-- end col-->
@@ -40,7 +42,7 @@
                             <table class="table table-striped table-bordered">
                                 <tbody>
                                 <tr>
-                                    <td><strong>{{ $review->writer->name }}</strong>
+                                    <td><strong><a href="{{ route('user.profile', $review->writer) }}">{{ $review->writer->name }}</a></strong>
                                     </td>
                                     <td class="text-right">
                                         <div class="btn-block cart-put form-inline change">
