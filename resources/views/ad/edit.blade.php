@@ -6,6 +6,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-xl-12">
+                @if(session()->has('warning'))
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{ session()->get('warning') }}
+                    </div>
+                @endif
                 <div class="card-box">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -42,14 +47,16 @@
                                 <label>Город</label>
                                 <select class="form-control" name="city_id">
                                     @foreach($cities as $city)
-                                        <option @if($ad->city->id === $city->id) selected @endif value="{{ $city->id }}">{{ $city->city }}</option>
+                                        <option @if($ad->city->id === $city->id) selected
+                                                @endif value="{{ $city->id }}">{{ $city->city }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="input">Выберите фото (одно или несколько):</label>
-                                <input class="form-control-file" id="input" type="file" name="image[]" multiple accept=".jpg, .jpeg, .png"/>
+                                <input class="form-control-file" id="input" type="file" name="image[]" multiple
+                                       accept=".jpg, .jpeg, .png"/>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Внести изменения</button>
@@ -58,7 +65,8 @@
                         @foreach($ad->images as $image)
                             <div role="group" class=" col-md-12"><img
                                     src="{{ Storage::url($image->image) }}"
-                                    class="d-sm-inline" style="width: 200px; border-radius: 10px; margin: 10px 10px 0px 0px">
+                                    class="d-sm-inline"
+                                    style="width: 200px; border-radius: 10px; margin: 10px 10px 0px 0px">
                                 <form method="post" action="{{ route('image.delete', $image) }}"
                                       style="display: inline-block;"><a href="#">
                                         <button type="submit" class="btn btn-danger">Удалить</button>

@@ -68,7 +68,7 @@ class AdController extends Controller
 
     public function edit($ad)
     {
-        $ad = Ad::where('id',$ad)->with('images')->first();
+        $ad = Ad::where('id', $ad)->with('images')->first();
         if (!is_null($ad) && Auth::id() == $ad->user_id) {
             $cities = City::all()->sortBy('city');
             return view('ad.edit', compact(['ad', 'cities']));
@@ -81,7 +81,7 @@ class AdController extends Controller
 
         $ad->update($request->all());
 
-        if(!is_null($request->file('image'))){
+        if (!is_null($request->file('image'))) {
             foreach ($request->file('image') as $item) {
                 $path = $item->store('user-images');
                 AdImage::create([
@@ -95,10 +95,14 @@ class AdController extends Controller
         return redirect()->route('show', $ad->id);
     }
 
-    public function deleteImage(AdImage $image){
-        Storage::delete($image->image);
-        $image->delete();
+    public function deleteImage(AdImage $image)
+    {
+        if(count($image->ad->images) > 1){
+            Storage::delete($image->image);
+            $image->delete();
+            return redirect()->back();
+        }
 
-        return redirect()->back();
+        return redirect()->back()->with('warning', 'У объявления должна быть хотя-бы одна фотография.');
     }
 }

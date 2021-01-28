@@ -13,4 +13,8 @@ class AdImage extends Model
         'image',
         'ad_id',
     ];
+
+    public function ad(){
+        return $this->belongsTo(Ad::class);
+    }
 }
