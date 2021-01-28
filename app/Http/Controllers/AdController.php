@@ -14,7 +14,7 @@ class AdController extends Controller
 {
     public function index()
     {
-        $ads = Ad::orderBy('created_at', 'desc')->paginate(8);
+        $ads = Ad::with('images')->orderBy('created_at', 'desc')->paginate(8);
         $cities = City::all()->sortBy('city');
         return view('home', compact(['ads', 'cities']));
     }
