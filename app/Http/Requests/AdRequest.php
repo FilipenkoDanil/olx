@@ -26,7 +26,7 @@ class AdRequest extends FormRequest
         $rules = [
             'title' => 'required|max:255',
             'price' => 'required|numeric|min:1',
-            'image.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'image.*' => 'image|mimes:jpeg,png,jpg|max:7168',
         ];
 
         if($this->route()->named('create.ad')){
