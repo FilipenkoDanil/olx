@@ -35,4 +35,12 @@ class AdRequest extends FormRequest
 
         return $rules;
     }
+
+    public function messages()
+    {
+        return [
+            'price.required' => 'Поле Цена обязательно для заполнения.',
+            'image.required' => 'У объявления должна быть хотя-бы одна фотография.',
+        ];
+    }
 }

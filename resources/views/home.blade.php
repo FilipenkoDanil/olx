@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Главная')
+
 @section('content')
     <div class="container">
         <nav class="navbar">

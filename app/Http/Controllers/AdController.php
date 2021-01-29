@@ -5,18 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdRequest;
 use App\Models\Ad;
 use App\Models\AdImage;
-use App\Models\City;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
     public function index()
     {
         $ads = Ad::with('images')->orderBy('created_at', 'desc')->paginate(8);
-        $cities = City::all()->sortBy('city');
-        return view('home', compact(['ads', 'cities']));
+        return view('home', compact('ads'));
     }
 
     public function show($adId)
@@ -30,8 +26,7 @@ class AdController extends Controller
 
     public function create()
     {
-        $cities = City::all()->sortBy('city');
-        return view('ad.create', compact('cities'));
+        return view('ad.create');
     }
 
     public function store(AdRequest $request)
@@ -44,13 +39,7 @@ class AdController extends Controller
             'city_id' => $request->city_id,
         ]);
 
-        foreach ($request->file('image') as $item) {
-            $path = $item->store('user-images');
-            AdImage::create([
-                'image' => $path,
-                'ad_id' => $ad->id
-            ]);
-        }
+        $ad->addImages($request);
 
         return redirect()->route('home')->with('success', 'Объявление добавлено.');
     }
@@ -58,9 +47,7 @@ class AdController extends Controller
     public function destroy($ad)
     {
         $ad = Ad::find($ad);
-        foreach ($ad->images as $image) {
-            Storage::delete($image->image);
-        }
+        $ad->deleteImages();
         $ad->delete();
 
         return redirect()->route('home');
@@ -70,36 +57,24 @@ class AdController extends Controller
     {
         $ad = Ad::where('id', $ad)->with('images')->first();
         if (!is_null($ad) && Auth::id() == $ad->user_id) {
-            $cities = City::all()->sortBy('city');
-            return view('ad.edit', compact(['ad', 'cities']));
+            return view('ad.edit', compact('ad'));
         }
         return redirect()->back();
     }
 
     public function update(AdRequest $request, Ad $ad)
     {
-
         $ad->update($request->all());
-
         if (!is_null($request->file('image'))) {
-            foreach ($request->file('image') as $item) {
-                $path = $item->store('user-images');
-                AdImage::create([
-                    'image' => $path,
-                    'ad_id' => $ad->id
-                ]);
-            }
+            $ad->addImages($request);
         }
-
 
         return redirect()->route('show', $ad->id);
     }
 
     public function deleteImage(AdImage $image)
     {
-        if(count($image->ad->images) > 1){
-            Storage::delete($image->image);
-            $image->delete();
+        if ($image->deleteImg()) {
             return redirect()->back();
         }
 

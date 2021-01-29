@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Ad extends Model
 {
@@ -27,5 +28,21 @@ class Ad extends Model
 
     public function city(){
         return $this->belongsTo(City::class);
+    }
+
+    public function addImages($request){
+        foreach ($request->file('image') as $item) {
+            $path = $item->store('user-images');
+            AdImage::create([
+                'image' => $path,
+                'ad_id' => $this->id,
+            ]);
+        }
+    }
+
+    public function deleteImages(){
+        foreach ($this->images as $image) {
+            Storage::delete($image->image);
+        }
     }
 }

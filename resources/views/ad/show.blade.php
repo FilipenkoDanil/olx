@@ -2,6 +2,11 @@
 
 @section('title', $ad->title)
 
+@section('custom_css')
+    <link href="/css/lightbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -54,7 +59,9 @@
                         </p>
                     </div>
                     @if(Auth::id() === $ad->user->id)
-                        <a href="{{ route('ad.edit', $ad) }}"><button class="btn btn-primary">Редактировать</button></a>
+                        <a href="{{ route('ad.edit', $ad) }}">
+                            <button class="btn btn-primary">Редактировать</button>
+                        </a>
                         <br>
                         <br>
                         <form action="{{ route('ad.destroy', $ad->id) }}" method="POST" class="inline-block">
@@ -69,4 +76,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script src="/js/lightbox-plus-jquery.min.js"></script>
 @endsection
