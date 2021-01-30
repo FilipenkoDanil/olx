@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Сообщения')
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -43,6 +45,7 @@
     <script>
         var receiver_id = '';
         var my_id = "{{ Auth::id() }}";
+        var titleOld = document.title;
         $(document).ready(function () {
 
             $.ajaxSetup({
@@ -58,6 +61,7 @@
 
             var channel = pusher.subscribe('my-channel');
             channel.bind('my-event', function (data) {
+
                 if (my_id == data['message']['from']) {
                     $('#' + data['message']['to']).click();
                 } else if (my_id == data['message']['to']) {
@@ -65,10 +69,29 @@
                         $('#' + data['message']['from']).click();
                     } else {
 
+                        var isOldTitle = true;
+                        var newTitle = "Новое сообщение";
+                        var interval = null;
+
+                        function changeTitle() {
+                            document.title = isOldTitle ? titleOld : newTitle;
+                            isOldTitle = !isOldTitle;
+                        }
+                        interval = setInterval(changeTitle, 700);
+
+                        $(window).focus(function () {
+                            clearInterval(interval);
+                            $("title").text(titleOld);
+                        });
+
+
+
+
                         var pending = parseInt($('#' + data['message']['from']).find('.pending').html());
 
                         if (pending) {
                             $('#' + data['message']['from']).find('.pending').html(pending + 1)
+
                         } else {
                             $('#' + data['message']['from']).append('<span class="pending">1</span>')
                         }

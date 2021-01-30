@@ -2,10 +2,6 @@
 
 @section('title', 'Профиль ' . $user->name)
 
-@section('custom_js')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous">
-@endsection
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -139,4 +135,38 @@
             </div> <!-- end col -->
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous">
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var titleOld = document.title;
+        $(document).ready(function () {
+            var pusher = new Pusher('2b4af12051c497449641', {
+                cluster: 'eu'
+            });
+
+            var channel = pusher.subscribe('my-channel');
+            channel.bind('my-event', function (data) {
+
+                var isOldTitle = true;
+                var newTitle = "Новое сообщение";
+                var interval = null;
+
+                function changeTitle() {
+                    document.title = isOldTitle ? titleOld : newTitle;
+                    isOldTitle = !isOldTitle;
+                }
+                interval = setInterval(changeTitle, 700);
+
+                $(window).focus(function () {
+                    clearInterval(interval);
+                    $("title").text(titleOld);
+                });
+            });
+
+        });
+    </script>
 @endsection
