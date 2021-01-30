@@ -20,7 +20,7 @@ Route::get('/search', [\App\Http\Controllers\SearchController::class, 'search'])
 
 
 Route::group(['prefix' => 'advert'], function () {
-    Route::group(['middleware' => 'auth'], function (){
+    Route::group(['middleware' => 'auth'], function () {
         Route::get('/create', [\App\Http\Controllers\AdController::class, 'create'])->name('create');
         Route::post('/create-ad', [\App\Http\Controllers\AdController::class, 'store'])->name('create.ad');
         Route::delete('/{ad}/delete', [\App\Http\Controllers\AdController::class, 'destroy'])->name('ad.destroy');
@@ -42,4 +42,9 @@ Route::group(['prefix' => 'user'], function () {
 
 });
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/messages', [App\Http\Controllers\ChatController::class, 'index'])->name('messages');
+    Route::get('/message/{id}', [App\Http\Controllers\ChatController::class, 'getMessage'])->name('message');
+    Route::post('/message/', [App\Http\Controllers\ChatController::class, 'sendMessage'])->name('message');
+});
 

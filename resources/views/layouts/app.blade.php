@@ -68,6 +68,10 @@
                                         Профиль
                                     </a>
 
+                                    <a class="dropdown-item" href="{{ route('messages') }}">
+                                        Сообщения
+                                    </a>
+
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="{{ route('user.edit') }}">

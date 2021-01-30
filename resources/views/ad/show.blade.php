@@ -4,7 +4,8 @@
 
 @section('custom_css')
     <link href="/css/lightbox.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+          integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous">
 @endsection
 
 @section('content')
@@ -57,6 +58,12 @@
                         <p class="text-muted mb-2 font-13"><strong>Почта :</strong> <span
                                 class="ml-2 ">{{ $ad->user->email }}</span>
                         </p>
+
+                        @if(Auth::id() !== $ad->user->id)
+                            <button id="modal" type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal" data-whatever="{{ $ad->user->name }}">Написать сообщение
+                            </button>
+                        @endif
                     </div>
                     @if(Auth::id() === $ad->user->id)
                         <a href="{{ route('ad.edit', $ad) }}">
@@ -73,6 +80,41 @@
                     @endif
 
                 </div> <!-- end card-box -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Новое сообщение</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('message') }}" method="post">
+                        @csrf
+                        <input type="hidden" value="{{ $ad->user->id }}" name="receiver_id">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Получатель:</label>
+                            <input type="text" class="form-control" id="recipient-name" readonly
+                                   value="{{ $ad->user->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Сообщение:</label>
+                            <textarea class="form-control" id="message-text" name="message"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
