@@ -10347,7 +10347,8 @@ li {
 
 .media-left img {
     width: 64px;
-    border-radius: 64px;
+    max-height: 70px;
+    border-radius: 55px;
 }
 
 .media-body p {

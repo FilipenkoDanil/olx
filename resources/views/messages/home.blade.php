@@ -61,7 +61,6 @@
 
             var channel = pusher.subscribe('my-channel');
             channel.bind('my-event', function (data) {
-
                 if (my_id == data['message']['from']) {
                     $('#' + data['message']['to']).click();
                 } else if (my_id == data['message']['to']) {
