@@ -25,5 +25,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(['home', 'ad.create', 'ad.edit'], 'App\ViewComposers\CitiesComposer');
+        View::composer(['layouts.app', 'home'], 'App\ViewComposers\MessagesComposer');
     }
 }

@@ -85,9 +85,9 @@
                         });
 
 
-
-
                         var pending = parseInt($('#' + data['message']['from']).find('.pending').html());
+                        var messages = parseInt($('a').find('.badge.badge-light').html());
+                        $('a').find('.badge.badge-light').html(messages + 1);
 
                         if (pending) {
                             $('#' + data['message']['from']).find('.pending').html(pending + 1)
@@ -102,6 +102,11 @@
 
             $('.user').click(function () {
                 $('.user').removeClass('active-user');
+
+                let readMessages = parseInt($(this).find('.pending').html());
+                let allMessages = parseInt($('a').find('.badge.badge-light').html());
+                $('a').find('.badge.badge-light').html(allMessages - readMessages);
+
                 $(this).addClass('active-user');
                 $(this).find('.pending').remove();
 
@@ -139,6 +144,7 @@
 
                         complete: function () {
                             scrollToBottomFunc();
+                            $('.input-text input').focus();
                         }
                     })
                 }

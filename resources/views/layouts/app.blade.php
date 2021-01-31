@@ -69,7 +69,7 @@
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('messages') }}">
-                                        Сообщения
+                                        Сообщения  <span class="badge badge-light">{{ count($messages) }}</span>
                                     </a>
 
                                     <div class="dropdown-divider"></div>
