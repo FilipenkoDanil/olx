@@ -43,16 +43,33 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function addReview(ReviewRequest $request, User $user){
+    public function addReview(ReviewRequest $request, User $user)
+    {
+        if ($request->get('rating')) {
+            Review::create([
+                'user_id' => $user->id,
+                'writer_id' => Auth::id(),
+                'comment' => $request->comment,
+                'rating' => $request->rating,
+            ]);
+
+            $user->updateRating();
+            return redirect()->back();
+        }
+
         Review::create([
             'user_id' => $user->id,
             'writer_id' => Auth::id(),
             'comment' => $request->comment,
-            'rating' => $request->rating,
+            'rating' => 0.0,
         ]);
 
-        $user->updateRating();
+        return redirect()->back();
+    }
 
+    public function deleteReview(Review $review)
+    {
+        $review->deleteReview();
         return redirect()->back();
     }
 }

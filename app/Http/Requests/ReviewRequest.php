@@ -25,7 +25,6 @@ class ReviewRequest extends FormRequest
     {
         return [
             'comment' => 'required|max:255',
-            'rating' => 'required',
         ];
     }
 }

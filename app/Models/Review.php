@@ -16,7 +16,21 @@ class Review extends Model
         'rating',
     ];
 
-    public function writer(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function writer()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function deleteReview()
+    {
+        $this->delete();
+        if ($this->rating > 0) {
+            $this->user->updateRating();
+        }
     }
 }

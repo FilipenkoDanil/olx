@@ -49,14 +49,15 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function ads(){
+    public function ads()
+    {
         return $this->hasMany(Ad::class);
     }
 
     public function updateRating()
     {
-        if (count($this->reviews) > 0) {
-            $this->rating = $this->reviews->sum('rating') / count($this->reviews);
+        if (count($this->reviews->where('rating', '>', '0')) > 0) {
+            $this->rating = $this->reviews->where('rating', '>', '0')->sum('rating') / count($this->reviews->where('rating', '>', '0'));
         } else {
             $this->rating = 0;
         }

@@ -2343,6 +2343,10 @@ textarea.form-control {
   flex-flow: row wrap;
   align-items: center;
 }
+
+.review-form-inline {
+    display: inline;
+}
 .form-inline .form-check {
   width: 100%;
 }

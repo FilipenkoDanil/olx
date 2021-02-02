@@ -46,5 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/messages', [App\Http\Controllers\ChatController::class, 'index'])->name('messages');
     Route::get('/message/{id}', [App\Http\Controllers\ChatController::class, 'getMessage'])->name('message');
     Route::post('/message/', [App\Http\Controllers\ChatController::class, 'sendMessage'])->name('message');
+
+    Route::post('review/{review}/deletereview/', [\App\Http\Controllers\UserController::class, 'deleteReview'])->name('user.deletereview');
 });
 
