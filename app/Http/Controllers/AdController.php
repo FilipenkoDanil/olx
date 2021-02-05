@@ -17,7 +17,7 @@ class AdController extends Controller
 
     public function show($adId)
     {
-        $ad = Ad::where('id', $adId)->with('user')->first();
+        $ad = Ad::where('id', $adId)->with('user')->withTrashed()->first();
         if ($ad) {
             return view('ad.show', compact('ad'));
         }
@@ -46,9 +46,7 @@ class AdController extends Controller
 
     public function destroy($ad)
     {
-        $ad = Ad::find($ad);
-        $ad->deleteImages();
-        $ad->delete();
+        Ad::findOrFail($ad)->delete();
 
         return redirect()->route('home');
     }

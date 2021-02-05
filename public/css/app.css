@@ -10402,7 +10402,7 @@ li {
     background: #eeeeee;
 }
 
-input[type='text'] {
+.input-text > input[type='text'] {
     width: 100%;
     padding: 12px 20px;
     margin: 15px 0 0 0;

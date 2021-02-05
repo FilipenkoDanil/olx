@@ -6,7 +6,7 @@
     <div class="container">
         <nav class="navbar">
             <form class="form-inline" method="GET" action="{{ route('search') }}">
-                <select class="form-control" name="сity">
+                <select class="form-control" name="city">
                     <option selected value="0">Вся Украина</option>
                     @foreach($cities as $city)
                         <option value="{{ $city->id }}">{{ $city->city }}</option>

@@ -20,7 +20,7 @@
                         <form method="POST" action="{{ route('create.ad') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="title">Название обявления</label>
+                                <label for="title">Название объявления</label>
                                 <input type="text" id="title" name="title" class="form-control" placeholder="Введите название" value="{{ old('title') }}">
                             </div>
 

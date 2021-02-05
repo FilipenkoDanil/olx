@@ -9,7 +9,10 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" @if($ad->deleted_at) style="opacity: .5;" @endif >
+        @if($ad->deleted_at)
+            <h1>Объявление не активно.</h1>
+        @endif
         <div class="row">
             <div class="col-lg-9 col-xl-9">
                 <div class="card-box">
@@ -65,21 +68,44 @@
                             </button>
                         @endif
                     </div>
-                    @if(Auth::id() === $ad->user->id)
+                    @if(Auth::id() === $ad->user->id && !$ad->deleted_at)
                         <a href="{{ route('ad.edit', $ad) }}">
                             <button class="btn btn-primary">Редактировать</button>
                         </a>
                         <br>
                         <br>
-                        <form action="{{ route('ad.destroy', $ad->id) }}" method="POST" class="inline-block">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-danger mb-0" type="submit">Удалить объявление</button>
-                        </form>
+                        <button class="btn btn-danger mb-0" type="submit"
+                                data-toggle="modal"
+                                data-target="#deleteModal">Удалить объявление
+                        </button>
 
                     @endif
 
                 </div> <!-- end card-box -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Вы действительно хотите удалить объявление?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('ad.destroy', $ad->id) }}" method="POST" class="inline-block">
+                        @method('DELETE')
+                        @csrf
+                        <button class="btn btn-danger mb-0" type="submit">Удалить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
